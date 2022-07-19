@@ -1,9 +1,8 @@
 import time
 import random
-#import lisa
-#import thd
 
 inventory = []
+party_list = []
 
 print ("You wake up to a notification on your phone, your package has arrived at the lockers… you run downstairs with your stomach grumbling.")
 print ("You ordered some food from your favorite restaurant.")
@@ -59,8 +58,6 @@ while 'cry' not in inventory:
     print(inventory)
 
 final_time = 0
-party_list = ['Randy', 'Carl', 'Patti']
-inventory = ['Phone']
 
 def add_sus_map():
     print("Suspicious Map added to inventory")
@@ -137,12 +134,6 @@ print("Now with the map in your possesion\nYou and your party notice a strange l
 print("Party: ", party_list)
 print("Inventory: ", inventory)
 print("Final Time: ", final_time)
-
-import random
-party = []
-inventory = []
-hasLog = 0
-hasItem = 0
 
 def vikki():
     print ("You see an uproar at the lockers and make your way over to them.")
@@ -255,18 +246,11 @@ def postLog():
     else:
         print ("Invalid input please choose 1,2,3, or 4")
 
-while hasLog != 1:
-    print(hasLog)
+while "maintenceLog" not in inventory:
+    print("inventory")
     vikki()
-    if "maintenceLog" in inventory:
-        hasLog = 1
-    else:
-        hasLog = 0
 
-while hasItem != 1:
-    print(hasItem)
+while "lockerLocation" not in inventory: 
+    print("inventory")
     postLog()
-    if "lockerLocation" in inventory:
-        hasItem = 1
-    else:
-        hasItem = 0
+    
