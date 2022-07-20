@@ -1,30 +1,27 @@
+from random import randint
 
-inventory = ['maintenceLog', 'sus', 'sus', 'sus', 'lockerLocation','craowbar']
-party_list = ['Randy', 'Caarl', 'Paatti']
+inventory = ['maintenceLog', 'sus', 'sus', 'sus', 'lockerLocation','crowbar']
+party_list = ['Randy', 'asd', 'Patti']
 quick_route = 0
 test = 0
-final_time = 0
-
-print(inventory)
+final_time = 25
 
 def add_harbor():
-    print('harbor added to inventory')
+    # print('harbor added to inventory')
     inventory.append('harbor')
 
 def carl_bonus():
     if 'Carl' in party_list:
+        print('Driving with Carl significantly cuts down on Drive time')
         return 10
     else:
         return 20
-        
-final_time += carl_bonus()
 
 def headquarters():
     print('1. Investigate the back of the lockers')
     print('2. Try to login to the iPad')
     print('3. Look in the truck')
     print('4. Call Support')
-    
     headquarters_choice = input('Enter Choice: ')
     
     if headquarters_choice == '1' and 'crowbar' in inventory:
@@ -60,10 +57,13 @@ def headquarters():
         
     else:
         print("You stand still wasting time")
+        print("Please enter one of the above numbers")
         print("Time added: 2 minutes")
         break_in_time = 2
 
     return break_in_time
+
+final_time += carl_bonus()
 
 if quick_route == 1:
     print('You follow Andy down a long road until you see a lone set of harbor lockers in the middle of nowhere\nYou wait for him to park and enter throug the back of the locker bank.')
@@ -71,10 +71,11 @@ else:
     print('You follow the instructions down a long road until you see a lone set of harbor lockers in the middle of nowhere\nYou see a lone truck sitting behind the lockers.')
 print('When you get to the locker you dont notice anything that unusual...\nbesides an outfited back that lockes from the inside...\nDo you...')
 
-
 while 'harbor' not in inventory:
-    print('ft: ',final_time)
     final_time += headquarters()
-    print('ft2: ',final_time)
 
+
+print("Party: ", party_list)
+print("Inventory: ", inventory)
+print("Final Time: ", final_time)
 
