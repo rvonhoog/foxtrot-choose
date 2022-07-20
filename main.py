@@ -178,9 +178,13 @@ def vikki():
     if choice == "1":
         print ("In order to impress Vikki, you'll need to roll a 7  or higher.\nPress ENTER to roll.")
         rand = random.randrange(1,17)
-        print (rand)
+        
         if rand >= 7:
+            print("Great, you rolled a", rand)
             print("Vikki is impressed with your assistance and joins the team!")
+            party_list.append("vikki")
+        else:
+            print("Bummer, you rolled a", rand)
         print("You fix the lockers and as you preform the test delivery the package is has dissapeared from the locker.")
         print("You demand a maintence log from the manager with the new found information.")
         inventory.append("maintence_log")
@@ -193,14 +197,16 @@ def vikki():
         if "already_asked" not in inventory:
             print("You find an associate and ask them about the strange tunnel that brought you to the store.")
             rand = random.randrange(1,17)
-            print (rand)
+            print("Roll a 3 or more so the associate understands")
             if rand <= 3:
+                print("Great, you rolled a",rand)
                 print("'Now that you mention it there has been some strangness with the lockers!' exclaims the associate")
                 print("They provide you with the maintence logs to the lockers to help look for clues")
                 inventory.append("maintence_log")
                 print("Time Added: 10 minutes")
                 vikki_time += 10
             else:
+                print("Bummer, you rolled a",rand)
                 print("'I am sorry but I do not know what you are talking about. I can not let you have this log without proper clearance.'")
                 print("Time Added: 5 minutes")
                 vikki_time += 5
@@ -231,7 +237,7 @@ def vikki():
             inventory.append("crowbar")
         print(inventory)
     else:
-        print ("Invalid input please choose 1,2,3, or 4")
+        print ("Enter Choice: ")
     return vikki_time
 
 def postLog():
@@ -273,7 +279,9 @@ def postLog():
                 print ("You call him out about helping with the install.")
                 print ("'The gull to say I was not needed for it to be completed. How dare you!'")
                 rand = random.randrange(1,17)
+            print ("You need to roll 8 or higher")
             if rand >= 8:
+                print ("Great, you rolled a",rand)
                 print ("The MOD arrives and lets you know they have a video that might be of some use.")
                 if "vikki" in party:
                     print("While watching the video Vikki lets you know that is reconizes the store shown and can take you to it.")
@@ -288,6 +296,7 @@ def postLog():
                     postLog_time += 30
                     inventory.append("lockerLocation")
             else:
+                print("Bummer, you rolled a",rand)
                 print("You have reached a dead end talking to him.")
                 print("Time Added: 2 minutes")
                 postLog_time += 2
@@ -304,10 +313,13 @@ def postLog():
         print("'Only strange thing was an Anywhere locker that went missing that day. Nothing about that install though.'")
         if "lisa" in party_list and "failed_locker_roll" not in inventory:
             rand = random(1,17)
+            print("You need to roll an 8 or higher")
             if rand <= 8:
+                print("Great, you rolled a",rand)
                 print("Lisa is able to help you decipher the rep's description of the location where they dropped off the locker.")
                 inventory.append("lockerLocation")
             else:
+                print("Bummer, you rolled a",rand)
                 inventory.append("failed_locker_roll")
                 print("Time Added: 1 minute")
                 postLog_time += 1
@@ -339,62 +351,63 @@ while "lockerLocation" not in inventory:
     print("Final Time: ", final_time)
     
 def add_harbor():
-    print('harbor added to inventory')
+    # print('harbor added to inventory')
     inventory.append('harbor')
 
 def carl_bonus():
     if 'Carl' in party_list:
+        print('Driving with Carl significantly cuts down on Drive time')
         return 10
     else:
         return 20
-        
-final_time += carl_bonus()
 
 def headquarters():
     print('1. Investigate the back of the lockers')
     print('2. Try to login to the iPad')
     print('3. Look in the truck')
     print('4. Call Support')
-    
     headquarters_choice = input('Enter Choice: ')
     
     if headquarters_choice == '1' and 'crowbar' in inventory:
-        print('Looks like the lock is old and beaten up...\nYou and your party use the crowbar you found at Home Depot\nYou pop the lock and climb in through the back\nTime Added: 1 minute')
+        print('Looks like the lock is old and beaten up...\nYou and your party use the crowbar you found at Home Depot\nYou pop the lock and climb in through the back\nTime Taken: 1 minute')
         add_harbor()
         break_in_time = 1
         
     elif headquarters_choice == '1' and 'crowbar' not in inventory:
-        print('Looks like the lock is old and beaten up...\nIf only you had a tool to help you break it\nTime Added: 2 minute')
+        print('Looks like the lock is old and beaten up...\nIf only you had a tool to help you break it\nTime Taken: 2 minute')
         break_in_time = 2
         
-    elif headquarters_choice == '2' and 'Patti' in party_list:
-        print('Patti is an expert in these lockers\nShe proceeds to open an XL locker...\nYou and your party climb in...\nTime Added: 1 minute')
+    elif headquarters_choice == '2' and 'patti' in party_list:
+        print('Patti is an expert in these lockers\nShe proceeds to open an XL locker...\nYou and your party climb in...\nTime Taken: 1 minute')
         add_harbor()
         break_in_time = 1
 
-    elif headquarters_choice == '2' and 'Patti' not in party_list:
+    elif headquarters_choice == '2' and 'patti' not in party_list:
         print('Unfortulatly there is no one in your party that can get into the lockers')
-        print("Time Added: 2 minutes")
+        print("Time added: 2 minutes")
         break_in_time = 2
         
     elif headquarters_choice == '3':
-        print('The truck is locked and looks like whoever owns it loves fast food\nTime Added: 1 minute')
+        print('The truck is locked and looks like whoever owns it loves fast food\nTime Taken: 1 minute')
         break_in_time = 1
 
     elif headquarters_choice == '4':
         print('You call support and explain the issue\nThey place you on a hold')
         print('....')
         print('They have concernes about the missing packages too and pop open the lockers\nYou and your party climb through')
-        print("Time Added: 7 minutes")
+        print("Time added: 7 minutes")
         add_harbor()
         break_in_time = 7
         
     else:
         print("You stand still wasting time")
-        print("Time Added: 2 minutes")
+        print("Please enter one of the above numbers")
+        print("Time added: 2 minutes")
         break_in_time = 2
 
     return break_in_time
+
+
 
 if quick_route == 1:
     print('You follow Andy down a long road until you see a lone set of harbor lockers in the middle of nowhere\nYou wait for him to park and enter throug the back of the locker bank.')
@@ -402,20 +415,10 @@ else:
     print('You follow the instructions down a long road until you see a lone set of harbor lockers in the middle of nowhere\nYou see a lone truck sitting behind the lockers.')
 print('When you get to the locker you dont notice anything that unusual...\nbesides an outfited back that lockes from the inside...\nDo you...')
 
+final_time += carl_bonus()
 
 while 'harbor' not in inventory:
-    print('ft: ',final_time)
     final_time += headquarters()
-    print('ft2: ',final_time)
-
-from random import randint
-
-#inventory = ['maintence_log', 'lockerLocation','crowbar']
-#party_list = ['Randy', 'asd']
-#quick_route = 0
-#test = 0
-#final_time = 25
-
 def boss_fight(final_time):
     if final_time <= 30:
         print('You walk until you see a light and a figure sitting at a table\nYou smell the food you ordered, not yet eaten\nWatching fork decend you...\n1. Rush the table\n2. Sneak up on him')
@@ -426,24 +429,24 @@ def boss_fight(final_time):
     else:
         print('You walk until you see a light and a figure sitting at a table\nYou smell the scraps of the food you ordered\nYou...\n1. Rush the table\n2. Sneak up on him')
         aa_choice = input()
-        
+
     if aa_choice == '1' and len(party_list) == 5:
-        print('With the strength of the whole party you are able to aprehend the Suspect\nJust as you thought it was Architect Andy\nHe tels you all about the tunnels he built\nYou saved the day, and everyone found their missing packages.')
+        print('With the strength of the whole party you are able to aprehend the Suspect\nJust as you thought it was Architect Andy\nHe tells you all about the tunnels he built\nYou saved the day, and everyone found their missing packages.')
         inventory.append('end_game')
     elif aa_choice == '1' and len(party_list) < 5:
-        print('Without the strength of the whole party you are not able to aprehend the Suspect\nHe slips away through his tunnels he built under the city...\nYou have not see the last of me, he shouts as his voice fades away.')
+        print('Without the strength of the whole party you are not able to aprehend the Suspect\nHe slips away through his tunnels he built under the city...\n"You have not see the last of me!", he shouts as his voice fades away.')
         inventory.append('end_game')
     elif aa_choice == '2' and len(party_list) <= 2:
         print('With the small party size you could creep up on the figure\nYou recgonize Architect Andy from his picture\nYou call the authorities and they come and aprehend Andy\nHe shouts about getting revenge\nYou found the missing packages and saved the day')
         inventory.append('end_game')
     elif aa_choice == '2' and len(party_list) > 2:
-        print('Your party is too large to sneak up\nHe slips away through his tunnels he built under the city...\nYou have not see the last of me, he shouts as his voice fades away.\nYou found the missing packages and saved the day\nfor now....')
+        print('Your party is too large to sneak up\nHe slips away through his tunnels he built under the city...\n"You have not see the last of me", he shouts as his voice fades away.\nYou found the missing packages and saved the day\nfor now....')
         inventory.append('end_game')
     else:
         print('No time to waste!!')
+        print("Please enter one of the above numbers")
+
 
 while 'end_game' not in inventory:
     boss_fight(final_time)
-
-
 print('\n\n\n\n\n\n\nTHE END 🎉')
