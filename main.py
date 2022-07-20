@@ -146,6 +146,7 @@ def vikki():
     print ("3. Ask a customer that is wandering around.")
     print ("4. Purchase the crowbar you have been meaning to get for home.")
     choice = input("Select 1,2,3, or 4: ")
+    vikki_time = 0
 
     if choice == "1":
         # addTime()
@@ -158,6 +159,7 @@ def vikki():
         print("You demand a maintence log from the manager with the new found information.")
         inventory.append(  "maintenceLog")
         print(inventory)
+        vikki_time += 120
     elif choice == "2":
         print("You find an associate and ask them about the strange tunnel that brought you to the store.")
         rand = random.randrange(1,17)
@@ -166,24 +168,29 @@ def vikki():
             print("'Now that you mention it there has been some strangness with the lockers!' exclaims the associate")
             print("They provide you with the maintence logs to the lockers to help look for clues")
             inventory.append("maintenceLog")
+            vikki_time += 10
         else:
             print("'I am sorry but I do not know what you are talking about. I can not let you have this log without proper clearance.'")
+            vikki_time += 5
     elif choice == "3":
         print("'Where am I? How did I get here?'")
         print("'This isn't my apartment complex!'")
         print("'There was a carrier'")
         print("'He must have pushed me into the locker!'")
         print("'I found a tunnel and when I crawled through it I was here.'")
+        vikki_time += 5
 
     elif choice == "4":
         if "crowbar" in inventory:
             print("You already have a crowbar")
+            vikki_time += 2
         else:
             print("You gain a crowbar")
             inventory.append("crowbar")
         print(inventory)
     else:
         print ("Invalid input please choose 1,2,3, or 4")
+    return vikki_time
 
 def postLog():
     print ("You now have the logs of who may have tampered with the locker system and notice that there are three names on the list: ")
@@ -192,6 +199,7 @@ def postLog():
     print ("3. Install Team")
 
     choice = input("Select 1,2, or 3: ")
+    postLog_time = 0
 
     if choice == "1":
         print("'Luxer One Retail Support this is Alex'")
@@ -202,6 +210,8 @@ def postLog():
         print("'Andy and I just stood around while installs did their thing'")
         inventory.append("sus")
         print(inventory)
+        postLog_time += 5
+        
 
     elif choice == "2":
         print("'Hello this is Andrew.'")
@@ -226,6 +236,7 @@ def postLog():
                 print("You watch the video and it appears to be a different store that you are not familar with")
                 print("You decide to stake out the next install and follow Andy's car back to the hide out.")
                 inventory.append("lockerLocation")
+        postLog_time += 30
 
     elif choice == "3":
         print("'Hello Luxer One Installs'")
@@ -247,14 +258,17 @@ def postLog():
             inventory.append("lockerLocation")
     else:
         print ("Invalid input please choose 1,2,3, or 4")
+    return postLog_time
 
 while "maintenceLog" not in inventory:
     print("inventory")
-    vikki()
+    final_time += vikki()
+    print("Final Time: ", final_time)
 
 while "lockerLocation" not in inventory: 
     print("inventory")
-    postLog()
+    final_time += postLog()
+    print("Final Time: ", final_time)
     
 def add_harbor():
     print('harbor added to inventory')
