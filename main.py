@@ -3,6 +3,8 @@ import random
 
 inventory = []
 party_list = []
+final_time = 0
+quick_route = 0
 
 print ("You wake up to a notification on your phone, your package has arrived at the lockers… you run downstairs with your stomach grumbling.")
 print ("You ordered some food from your favorite restaurant.")
@@ -57,9 +59,8 @@ while 'cry' not in inventory:
     first_text()
     print(inventory)
 
-final_time = 0
 
-if "carl" in party_list:
+if "Carl" in party_list:
     def add_sus_map():
         print("Suspicious Map added to inventory")
         inventory.append('Suspicious Map')
@@ -232,13 +233,13 @@ def postLog():
         print("'Ah yes, I remember that install.'")
         print("'Went off without a hitch.'")
         print("'Only strange thing was an Anywhere locker that went missing that day. Nothing about that install though.'")
-        if "lisa" in party:
+        if "lisa" in party_list:
             rand = random(1,17)
             if rand <= 8:
                 print("Lisa is able to help you decipher the rep's description of the location where they dropped off the locker.")
                 inventory.append("lockerLocation")
             else:
-                party.remove("lisa")
+                party_list.remove("lisa")
         else:
             print("Unable to decipher Install's description of the location you turn to chatbot.")
             print("Chatbot initally responds rather quickly but doesn't understand query.")
@@ -255,3 +256,112 @@ while "lockerLocation" not in inventory:
     print("inventory")
     postLog()
     
+def add_harbor():
+    print('harbor added to inventory')
+    inventory.append('harbor')
+
+def carl_bonus():
+    if 'Carl' in party_list:
+        return 10
+    else:
+        return 20
+        
+final_time += carl_bonus()
+
+def headquarters():
+    print('1. Investigate the back of the lockers')
+    print('2. Try to login to the iPad')
+    print('3. Look in the truck')
+    print('4. Call Support')
+    
+    headquarters_choice = input('Enter Choice: ')
+    
+    if headquarters_choice == '1' and 'crowbar' in inventory:
+        print('Looks like the lock is old and beaten up...\nYou and your party use the crowbar you found at Home Depot\nYou pop the lock and climb in through the back\nTime Taken: 1 minute')
+        add_harbor()
+        break_in_time = 1
+        
+    elif headquarters_choice == '1' and 'crowbar' not in inventory:
+        print('Looks like the lock is old and beaten up...\nIf only you had a tool to help you break it\nTime Taken: 2 minute')
+        break_in_time = 2
+        
+    elif headquarters_choice == '2' and 'Patti' in party_list:
+        print('Patti is an expert in these lockers\nShe proceeds to open an XL locker...\nYou and your party climb in...\nTime Taken: 1 minute')
+        add_harbor()
+        break_in_time = 1
+
+    elif headquarters_choice == '2' and 'Patti' not in party_list:
+        print('Unfortulatly there is no one in your party that can get into the lockers')
+        print("Time added: 2 minutes")
+        break_in_time = 2
+        
+    elif headquarters_choice == '3':
+        print('The truck is locked and looks like whoever owns it loves fast food\nTime Taken: 1 minute')
+        break_in_time = 1
+
+    elif headquarters_choice == '4':
+        print('You call support and explain the issue\nThey place you on a hold')
+        print('....')
+        print('They have concernes about the missing packages too and pop open the lockers\nYou and your party climb through')
+        print("Time added: 7 minutes")
+        add_harbor()
+        break_in_time = 7
+        
+    else:
+        print("You stand still wasting time")
+        print("Time added: 2 minutes")
+        break_in_time = 2
+
+    return break_in_time
+
+if quick_route == 1:
+    print('You follow Andy down a long road until you see a lone set of harbor lockers in the middle of nowhere\nYou wait for him to park and enter throug the back of the locker bank.')
+else:
+    print('You follow the instructions down a long road until you see a lone set of harbor lockers in the middle of nowhere\nYou see a lone truck sitting behind the lockers.')
+print('When you get to the locker you dont notice anything that unusual...\nbesides an outfited back that lockes from the inside...\nDo you...')
+
+
+while 'harbor' not in inventory:
+    print('ft: ',final_time)
+    final_time += headquarters()
+    print('ft2: ',final_time)
+
+from random import randint
+
+#inventory = ['maintenceLog', 'lockerLocation','crowbar']
+#party_list = ['Randy', 'asd']
+#quick_route = 0
+#test = 0
+#final_time = 25
+
+def boss_fight(final_time):
+    if final_time <= 30:
+        print('You walk until you see a light and a figure sitting at a table\nYou smell the food you ordered, not yet eaten\nWatching fork decend you...\n1. Rush the table\n2. Sneak up on him')
+        aa_choice = input()
+    elif final_time > 30 and final_time < 50:
+        print('You walk until you see a light and a figure sitting at a table\nYou smell the food you ordered, activly being eaten\nWatching fork decend you...\n1. Rush the table\n2. Sneak up on him')
+        aa_choice = input()
+    else:
+        print('You walk until you see a light and a figure sitting at a table\nYou smell the scraps of the food you ordered\nYou...\n1. Rush the table\n2. Sneak up on him')
+        aa_choice = input()
+        
+    if aa_choice == '1' and len(party_list) == 5:
+        print('With the strength of the whole party you are able to aprehend the Suspect\nJust as you thought it was Architect Andy\nHe tels you all about the tunnels he built\nYou saved the day, and everyone found their missing packages.')
+        inventory.append('end_game')
+    elif aa_choice == '1' and len(party_list) < 5:
+        print('Without the strength of the whole party you are not able to aprehend the Suspect\nHe slips away through his tunnels he built under the city...\nYou have not see the last of me, he shouts as his voice fades away.')
+        inventory.append('end_game')
+    elif aa_choice == '2' and len(party_list) <= 2:
+        print('With the small party size you could creep up on the figure\nYou recgonize Architect Andy from his picture\nYou call the authorities and they come and aprehend Andy\nHe shouts about getting revenge\nYou found the missing packages and saved the day')
+        inventory.append('end_game')
+    elif aa_choice == '2' and len(party_list) > 2:
+        print('Your party is too large to sneak up\nHe slips away through his tunnels he built under the city...\nYou have not see the last of me, he shouts as his voice fades away.\nYou found the missing packages and saved the day\nfor now....')
+        inventory.append('end_game')
+    else:
+        print('No time to waste!!')
+
+while 'end_game' not in inventory:
+    boss_fight(final_time)
+
+
+print('\n\n\n\n\n\n\nTHE END 🎉')
